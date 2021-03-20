@@ -1,3 +1,5 @@
 .snowpack
 build
 node_modules
+# FIXME:
+public/ipfs-http-client.min.js

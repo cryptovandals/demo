@@ -1,12 +1,13 @@
 {
   "scripts": {
+    "preinstall": "cp node_modules/ipfs-http-client/dist/index.min.js public/ipfs-http-client.min.js",
     "start": "snowpack dev",
     "build": "snowpack build",
     "test": "web-test-runner \"src/**/*.test.ts\""
   },
   "dependencies": {
     "ethers": "^5.0.32",
-    "ipfs-http-client-lite": "^0.3.0",
+    "ipfs-http-client": "^49.0.4",
     "svelte": "^3.24.0"
   },
   "devDependencies": {

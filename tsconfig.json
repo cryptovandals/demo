@@ -22,6 +22,7 @@
     "resolveJsonModule": true,
     "useDefineForClassFields": true,
     "allowSyntheticDefaultImports": true,
-    "importsNotUsedAsValues": "error"
+    // FIXME: The typechain module generates errors because if unused imports.
+    //"importsNotUsedAsValues": "error"
   }
 }
