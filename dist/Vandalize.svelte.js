@@ -21,7 +21,7 @@ import {
 import { ipfsAdd, toGateway } from "./ipfs.js";
 
 function create_fragment(ctx) {
-	let div1;
+	let div4;
 	let div0;
 	let h2;
 	let t0_value = /*fromToken*/ ctx[0].metadata.name + "";
@@ -36,25 +36,28 @@ function create_fragment(ctx) {
 	let t5_value = JSON.stringify(/*fromToken*/ ctx[0].metadata, null, 4) + "";
 	let t5;
 	let t6;
+	let div1;
 	let button;
 	let t8;
 	let input;
 	let t9;
 	let label;
 	let t11;
+	let div2;
+	let pre1;
+	let t12_value = /*logs*/ ctx[1].join("\n") + "";
+	let t12;
+	let t13;
+	let div3;
 	let img;
 	let img_src_value;
 	let img_alt_value;
-	let t12;
-	let pre1;
-	let t13_value = /*logs*/ ctx[1].join("\n") + "";
-	let t13;
 	let mounted;
 	let dispose;
 
 	return {
 		c() {
-			div1 = element("div");
+			div4 = element("div");
 			div0 = element("div");
 			h2 = element("h2");
 			t0 = text(t0_value);
@@ -66,6 +69,7 @@ function create_fragment(ctx) {
 			pre0 = element("pre");
 			t5 = text(t5_value);
 			t6 = space();
+			div1 = element("div");
 			button = element("button");
 			button.textContent = "Liberate";
 			t8 = space();
@@ -74,23 +78,28 @@ function create_fragment(ctx) {
 			label = element("label");
 			label.textContent = "Vandalize";
 			t11 = space();
-			img = element("img");
-			t12 = space();
+			div2 = element("div");
 			pre1 = element("pre");
-			t13 = text(t13_value);
-			attr(div0, "class", "metadata svelte-gsbp06");
+			t12 = text(t12_value);
+			t13 = space();
+			div3 = element("div");
+			img = element("img");
+			attr(div0, "class", "header svelte-1qflc1w");
 			attr(input, "type", "file");
 			attr(input, "id", "image-file");
 			attr(input, "name", "image");
 			attr(label, "for", "image-file");
+			attr(div1, "class", "header svelte-1qflc1w");
+			attr(div2, "class", "log svelte-1qflc1w");
 			if (img.src !== (img_src_value = /*fromToken*/ ctx[0].metadata.image)) attr(img, "src", img_src_value);
 			attr(img, "alt", img_alt_value = /*fromToken*/ ctx[0].metadata.description);
-			attr(img, "class", "svelte-gsbp06");
-			attr(div1, "class", "svelte-gsbp06");
+			attr(img, "class", "svelte-1qflc1w");
+			attr(div3, "class", "body svelte-1qflc1w");
+			attr(div4, "class", "token svelte-1qflc1w");
 		},
 		m(target, anchor) {
-			insert(target, div1, anchor);
-			append(div1, div0);
+			insert(target, div4, anchor);
+			append(div4, div0);
 			append(div0, h2);
 			append(h2, t0);
 			append(div0, t1);
@@ -100,19 +109,22 @@ function create_fragment(ctx) {
 			append(div0, t4);
 			append(div0, pre0);
 			append(pre0, t5);
-			append(div1, t6);
+			append(div4, t6);
+			append(div4, div1);
 			append(div1, button);
 			append(div1, t8);
 			append(div1, input);
 			/*input_binding*/ ctx[8](input);
 			append(div1, t9);
 			append(div1, label);
-			append(div1, t11);
-			append(div1, img);
+			append(div4, t11);
+			append(div4, div2);
+			append(div2, pre1);
+			append(pre1, t12);
+			append(div4, t13);
+			append(div4, div3);
+			append(div3, img);
 			/*img_binding*/ ctx[10](img);
-			append(div1, t12);
-			append(div1, pre1);
-			append(pre1, t13);
 
 			if (!mounted) {
 				dispose = [
@@ -127,6 +139,7 @@ function create_fragment(ctx) {
 			if (dirty & /*fromToken*/ 1 && t0_value !== (t0_value = /*fromToken*/ ctx[0].metadata.name + "")) set_data(t0, t0_value);
 			if (dirty & /*fromToken*/ 1 && t3_value !== (t3_value = /*fromToken*/ ctx[0].uri + "")) set_data(t3, t3_value);
 			if (dirty & /*fromToken*/ 1 && t5_value !== (t5_value = JSON.stringify(/*fromToken*/ ctx[0].metadata, null, 4) + "")) set_data(t5, t5_value);
+			if (dirty & /*logs*/ 2 && t12_value !== (t12_value = /*logs*/ ctx[1].join("\n") + "")) set_data(t12, t12_value);
 
 			if (dirty & /*fromToken*/ 1 && img.src !== (img_src_value = /*fromToken*/ ctx[0].metadata.image)) {
 				attr(img, "src", img_src_value);
@@ -135,13 +148,11 @@ function create_fragment(ctx) {
 			if (dirty & /*fromToken*/ 1 && img_alt_value !== (img_alt_value = /*fromToken*/ ctx[0].metadata.description)) {
 				attr(img, "alt", img_alt_value);
 			}
-
-			if (dirty & /*logs*/ 2 && t13_value !== (t13_value = /*logs*/ ctx[1].join("\n") + "")) set_data(t13, t13_value);
 		},
 		i: noop,
 		o: noop,
 		d(detaching) {
-			if (detaching) detach(div1);
+			if (detaching) detach(div4);
 			/*input_binding*/ ctx[8](null);
 			/*img_binding*/ ctx[10](null);
 			mounted = false;

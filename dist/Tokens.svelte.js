@@ -32,7 +32,7 @@ function get_each_context(ctx, list, i) {
 	return child_ctx;
 }
 
-// (30:0) {#if list}
+// (48:0) {#if list}
 function create_if_block_1(ctx) {
 	let ul;
 	let each_value = /*list*/ ctx[0];
@@ -50,7 +50,7 @@ function create_if_block_1(ctx) {
 				each_blocks[i].c();
 			}
 
-			attr(ul, "class", "svelte-os00ec");
+			attr(ul, "class", "svelte-11x41wc");
 		},
 		m(target, anchor) {
 			insert(target, ul, anchor);
@@ -60,7 +60,7 @@ function create_if_block_1(ctx) {
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty & /*list, fromToken*/ 5) {
+			if (dirty & /*fromToken, list*/ 5) {
 				each_value = /*list*/ ctx[0];
 				let i;
 
@@ -90,17 +90,20 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (32:4) {#each list as t}
+// (50:4) {#each list as t}
 function create_each_block(ctx) {
 	let li;
+	let div0;
 	let t0_value = /*t*/ ctx[4].metadata.name + "";
 	let t0;
 	let t1;
-	let button;
-	let t3;
+	let div1;
 	let img;
 	let img_src_value;
 	let img_alt_value;
+	let t2;
+	let div2;
+	let button;
 	let t4;
 	let mounted;
 	let dispose;
@@ -112,25 +115,34 @@ function create_each_block(ctx) {
 	return {
 		c() {
 			li = element("li");
+			div0 = element("div");
 			t0 = text(t0_value);
 			t1 = space();
+			div1 = element("div");
+			img = element("img");
+			t2 = space();
+			div2 = element("div");
 			button = element("button");
 			button.textContent = "Select";
-			t3 = space();
-			img = element("img");
 			t4 = space();
+			attr(div0, "class", "header svelte-11x41wc");
 			if (img.src !== (img_src_value = /*t*/ ctx[4].metadata.image)) attr(img, "src", img_src_value);
 			attr(img, "alt", img_alt_value = /*t*/ ctx[4].metadata.description);
-			attr(img, "class", "svelte-os00ec");
-			attr(li, "class", "token svelte-os00ec");
+			attr(img, "class", "svelte-11x41wc");
+			attr(div1, "class", "body svelte-11x41wc");
+			attr(div2, "class", "footer svelte-11x41wc");
+			attr(li, "class", "token svelte-11x41wc");
 		},
 		m(target, anchor) {
 			insert(target, li, anchor);
-			append(li, t0);
+			append(li, div0);
+			append(div0, t0);
 			append(li, t1);
-			append(li, button);
-			append(li, t3);
-			append(li, img);
+			append(li, div1);
+			append(div1, img);
+			append(li, t2);
+			append(li, div2);
+			append(div2, button);
 			append(li, t4);
 
 			if (!mounted) {
@@ -158,8 +170,9 @@ function create_each_block(ctx) {
 	};
 }
 
-// (42:0) {#if fromToken}
+// (66:0) {#if fromToken}
 function create_if_block(ctx) {
+	let div;
 	let vandalize;
 	let current;
 
@@ -172,10 +185,13 @@ function create_if_block(ctx) {
 
 	return {
 		c() {
+			div = element("div");
 			create_component(vandalize.$$.fragment);
+			attr(div, "class", "vandalizer svelte-11x41wc");
 		},
 		m(target, anchor) {
-			mount_component(vandalize, target, anchor);
+			insert(target, div, anchor);
+			mount_component(vandalize, div, null);
 			current = true;
 		},
 		p(ctx, dirty) {
@@ -194,7 +210,8 @@ function create_if_block(ctx) {
 			current = false;
 		},
 		d(detaching) {
-			destroy_component(vandalize, detaching);
+			if (detaching) detach(div);
+			destroy_component(vandalize);
 		}
 	};
 }
