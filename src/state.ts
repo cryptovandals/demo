@@ -92,6 +92,7 @@ export const kittyTokens = derived<
   IToken[] | undefined
 >([kitty, address], ([$kitty, $address], set) => {
   if (!$kitty || !$address) {
+    set([]);
     return;
   }
 
@@ -151,6 +152,7 @@ export const cryptoVandalsTokens = derived<
   IToken[] | undefined
 >([cryptoVandals, address], ([$cryptoVandals, $address], set) => {
   if (!$cryptoVandals || !$address) {
+    set([]);
     return;
   }
   (async () => {

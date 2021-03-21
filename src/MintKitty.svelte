@@ -4,6 +4,7 @@
   import type { Kitty } from "./typechain";
 
   export let kitty: Kitty;
+  let state = "idle";
 
   const KITTY_BASE_URL =
     "https://img.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/";
@@ -23,10 +24,25 @@
   }
 
   async function handleMint() {
+    state = "working";
     const metadata = generateKitty();
     const cid = await ipfsAdd(JSON.stringify(metadata, null, 4));
-    await kitty.mint(toGateway(cid));
+    const tx = await kitty.mint(toGateway(cid));
+    await tx.wait();
+    state = "idle";
   }
 </script>
 
-<button on:click={() => handleMint()}>Mint Kitty</button>
+<button
+  class="button-shadow"
+  disabled={state === "working"}
+  on:click={() => handleMint()}
+>
+  <span>
+    {#if state === "idle"}
+      Mint test Kitty
+    {:else}
+      Minting, please wait
+    {/if}
+  </span>
+</button>
