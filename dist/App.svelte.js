@@ -56,14 +56,17 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (23:0) {:else}
+// (37:0) {:else}
 function create_else_block(ctx) {
 	let div1;
 	let t5;
+	let p0;
+	let t13;
 	let section;
-	let t6;
-	let t7;
-	let t8;
+	let p1;
+	let t14;
+	let t15;
+	let t16;
 	let current;
 	let if_block = /*$cryptoVandals*/ ctx[2] && /*$kitty*/ ctx[3] && create_if_block_1(ctx);
 
@@ -79,25 +82,38 @@ function create_else_block(ctx) {
         CryptoVandals.com</span></div>`;
 
 			t5 = space();
+			p0 = element("p");
+
+			p0.innerHTML = `<a href="https://github.com/cryptovandals/contracts/blob/main/MANIFESTO.md" class="svelte-1eddprt">CryptoVandals MANIFESTO</a> 
+    <a href="https://github.com/cryptovandals/demo" class="svelte-1eddprt">Dapp code</a> 
+    <a href="https://github.com/cryptovandals/contracts" class="svelte-1eddprt">Contract code</a> 
+    <a href="https://twitter.com/cryptovandals" class="svelte-1eddprt">Twitter</a>`;
+
+			t13 = space();
 			section = element("section");
-			t6 = text("Your address: ");
-			t7 = text(/*$address*/ ctx[1]);
-			t8 = space();
+			p1 = element("p");
+			t14 = text("Your address: ");
+			t15 = text(/*$address*/ ctx[1]);
+			t16 = space();
 			if (if_block) if_block.c();
-			attr(div1, "class", "marquee svelte-1lz5qlu");
+			attr(div1, "class", "marquee svelte-1eddprt");
+			attr(p0, "class", "links svelte-1eddprt");
 		},
 		m(target, anchor) {
 			insert(target, div1, anchor);
 			insert(target, t5, anchor);
+			insert(target, p0, anchor);
+			insert(target, t13, anchor);
 			insert(target, section, anchor);
-			append(section, t6);
-			append(section, t7);
-			append(section, t8);
+			append(section, p1);
+			append(p1, t14);
+			append(p1, t15);
+			append(section, t16);
 			if (if_block) if_block.m(section, null);
 			current = true;
 		},
 		p(ctx, dirty) {
-			if (!current || dirty & /*$address*/ 2) set_data(t7, /*$address*/ ctx[1]);
+			if (!current || dirty & /*$address*/ 2) set_data(t15, /*$address*/ ctx[1]);
 
 			if (/*$cryptoVandals*/ ctx[2] && /*$kitty*/ ctx[3]) {
 				if (if_block) {
@@ -134,13 +150,15 @@ function create_else_block(ctx) {
 		d(detaching) {
 			if (detaching) detach(div1);
 			if (detaching) detach(t5);
+			if (detaching) detach(p0);
+			if (detaching) detach(t13);
 			if (detaching) detach(section);
 			if (if_block) if_block.d();
 		}
 	};
 }
 
-// (21:0) {#if !$address}
+// (35:0) {#if !$address}
 function create_if_block(ctx) {
 	let connect;
 	let current;
@@ -170,7 +188,7 @@ function create_if_block(ctx) {
 	};
 }
 
-// (43:4) {#if $cryptoVandals && $kitty}
+// (68:4) {#if $cryptoVandals && $kitty}
 function create_if_block_1(ctx) {
 	let current_block_type_index;
 	let if_block;
@@ -267,7 +285,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (49:6) {:else}
+// (74:6) {:else}
 function create_else_block_1(ctx) {
 	let h2;
 	let t0;
@@ -329,7 +347,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (44:6) {#if $kittyTokens && $kittyTokens.length === 0}
+// (69:6) {#if $kittyTokens && $kittyTokens.length === 0}
 function create_if_block_2(ctx) {
 	let p;
 	let t;

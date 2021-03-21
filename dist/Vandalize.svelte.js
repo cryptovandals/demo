@@ -37,7 +37,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (110:4) {#if state === "idle"}
+// (112:4) {#if state === "idle"}
 function create_if_block(ctx) {
 	let button;
 	let t1;
@@ -65,14 +65,14 @@ function create_if_block(ctx) {
 			insert(target, button, anchor);
 			insert(target, t1, anchor);
 			insert(target, input, anchor);
-			/*input_binding*/ ctx[9](input);
+			/*input_binding*/ ctx[11](input);
 			insert(target, t2, anchor);
 			insert(target, label, anchor);
 
 			if (!mounted) {
 				dispose = [
-					listen(button, "click", /*click_handler*/ ctx[8]),
-					listen(input, "change", /*change_handler*/ ctx[10])
+					listen(button, "click", /*click_handler_1*/ ctx[10]),
+					listen(input, "change", /*change_handler*/ ctx[12])
 				];
 
 				mounted = true;
@@ -83,7 +83,7 @@ function create_if_block(ctx) {
 			if (detaching) detach(button);
 			if (detaching) detach(t1);
 			if (detaching) detach(input);
-			/*input_binding*/ ctx[9](null);
+			/*input_binding*/ ctx[11](null);
 			if (detaching) detach(t2);
 			if (detaching) detach(label);
 			mounted = false;
@@ -99,29 +99,33 @@ function create_fragment(ctx) {
 	let t0_value = /*fromToken*/ ctx[0].metadata.name + "";
 	let t0;
 	let t1;
-	let code;
-	let t2;
-	let t3_value = /*fromToken*/ ctx[0].uri + "";
+	let button;
 	let t3;
+	let code;
 	let t4;
-	let pre0;
-	let t5_value = JSON.stringify(/*fromToken*/ ctx[0].metadata, null, 4) + "";
+	let t5_value = /*fromToken*/ ctx[0].uri + "";
 	let t5;
 	let t6;
-	let div1;
+	let pre0;
+	let t7_value = JSON.stringify(/*fromToken*/ ctx[0].metadata, null, 4) + "";
 	let t7;
+	let t8;
+	let div1;
+	let t9;
 	let div2;
 	let pre1;
-	let t8_value = /*logs*/ ctx[1].join("\n") + "";
-	let t8;
-	let t9;
+	let t10_value = /*logs*/ ctx[2].join("\n") + "";
+	let t10;
+	let t11;
 	let div3;
 	let img;
 	let img_src_value;
 	let img_alt_value;
+	let mounted;
+	let dispose;
 
 	function select_block_type(ctx, dirty) {
-		if (/*state*/ ctx[4] === "idle") return create_if_block;
+		if (/*state*/ ctx[5] === "idle") return create_if_block;
 		return create_else_block;
 	}
 
@@ -135,20 +139,23 @@ function create_fragment(ctx) {
 			h2 = element("h2");
 			t0 = text(t0_value);
 			t1 = space();
+			button = element("button");
+			button.textContent = "Close";
+			t3 = space();
 			code = element("code");
-			t2 = text("Token URI: ");
-			t3 = text(t3_value);
-			t4 = space();
-			pre0 = element("pre");
+			t4 = text("Token URI: ");
 			t5 = text(t5_value);
 			t6 = space();
+			pre0 = element("pre");
+			t7 = text(t7_value);
+			t8 = space();
 			div1 = element("div");
 			if_block.c();
-			t7 = space();
+			t9 = space();
 			div2 = element("div");
 			pre1 = element("pre");
-			t8 = text(t8_value);
-			t9 = space();
+			t10 = text(t10_value);
+			t11 = space();
 			div3 = element("div");
 			img = element("img");
 			attr(div0, "class", "header svelte-1qflc1w");
@@ -166,28 +173,35 @@ function create_fragment(ctx) {
 			append(div0, h2);
 			append(h2, t0);
 			append(div0, t1);
+			append(div0, button);
+			append(div0, t3);
 			append(div0, code);
-			append(code, t2);
-			append(code, t3);
-			append(div0, t4);
+			append(code, t4);
+			append(code, t5);
+			append(div0, t6);
 			append(div0, pre0);
-			append(pre0, t5);
-			append(div4, t6);
+			append(pre0, t7);
+			append(div4, t8);
 			append(div4, div1);
 			if_block.m(div1, null);
-			append(div4, t7);
+			append(div4, t9);
 			append(div4, div2);
 			append(div2, pre1);
-			append(pre1, t8);
-			append(div4, t9);
+			append(pre1, t10);
+			append(div4, t11);
 			append(div4, div3);
 			append(div3, img);
-			/*img_binding*/ ctx[11](img);
+			/*img_binding*/ ctx[13](img);
+
+			if (!mounted) {
+				dispose = listen(button, "click", /*click_handler*/ ctx[9]);
+				mounted = true;
+			}
 		},
 		p(ctx, [dirty]) {
 			if (dirty & /*fromToken*/ 1 && t0_value !== (t0_value = /*fromToken*/ ctx[0].metadata.name + "")) set_data(t0, t0_value);
-			if (dirty & /*fromToken*/ 1 && t3_value !== (t3_value = /*fromToken*/ ctx[0].uri + "")) set_data(t3, t3_value);
-			if (dirty & /*fromToken*/ 1 && t5_value !== (t5_value = JSON.stringify(/*fromToken*/ ctx[0].metadata, null, 4) + "")) set_data(t5, t5_value);
+			if (dirty & /*fromToken*/ 1 && t5_value !== (t5_value = /*fromToken*/ ctx[0].uri + "")) set_data(t5, t5_value);
+			if (dirty & /*fromToken*/ 1 && t7_value !== (t7_value = JSON.stringify(/*fromToken*/ ctx[0].metadata, null, 4) + "")) set_data(t7, t7_value);
 
 			if (current_block_type === (current_block_type = select_block_type(ctx, dirty)) && if_block) {
 				if_block.p(ctx, dirty);
@@ -201,7 +215,7 @@ function create_fragment(ctx) {
 				}
 			}
 
-			if (dirty & /*logs*/ 2 && t8_value !== (t8_value = /*logs*/ ctx[1].join("\n") + "")) set_data(t8, t8_value);
+			if (dirty & /*logs*/ 4 && t10_value !== (t10_value = /*logs*/ ctx[2].join("\n") + "")) set_data(t10, t10_value);
 
 			if (dirty & /*fromToken*/ 1 && img.src !== (img_src_value = /*fromToken*/ ctx[0].metadata.image)) {
 				attr(img, "src", img_src_value);
@@ -216,7 +230,9 @@ function create_fragment(ctx) {
 		d(detaching) {
 			if (detaching) detach(div4);
 			if_block.d();
-			/*img_binding*/ ctx[11](null);
+			/*img_binding*/ ctx[13](null);
+			mounted = false;
+			dispose();
 		}
 	};
 }
@@ -226,6 +242,7 @@ function instance($$self, $$props, $$invalidate) {
 	
 	let { fromToken } = $$props;
 	let { vandalizer } = $$props;
+	let { onClose } = $$props;
 	let logs = [];
 	let imageElement;
 	let uploadElement;
@@ -233,16 +250,16 @@ function instance($$self, $$props, $$invalidate) {
 
 	function log(s) {
 		console.log(s);
-		$$invalidate(1, logs = [...logs, s]);
+		$$invalidate(2, logs = [...logs, s]);
 	}
 
 	async function handleLiberate() {
-		$$invalidate(4, state = "working");
+		$$invalidate(5, state = "working");
 		log(`Get original image from ${fromToken.metadata.image}`);
 		const imageReq = await fetch(fromToken.metadata.image);
 		const image = await imageReq.blob();
 		await handleVandalize(image);
-		$$invalidate(4, state = "idle");
+		$$invalidate(5, state = "idle");
 	}
 
 	async function handleVandalize(image) {
@@ -278,7 +295,7 @@ function instance($$self, $$props, $$invalidate) {
 	}
 
 	async function handleUpload() {
-		$$invalidate(4, state = "working");
+		$$invalidate(5, state = "working");
 
 		if (!uploadElement.files) {
 			return;
@@ -289,7 +306,7 @@ function instance($$self, $$props, $$invalidate) {
 		const [file] = uploadElement.files;
 
 		fileReaderDataUrl.onload = () => {
-			$$invalidate(2, imageElement.src = fileReaderDataUrl.result, imageElement);
+			$$invalidate(3, imageElement.src = fileReaderDataUrl.result, imageElement);
 		};
 
 		fileReaderDataUrl.readAsDataURL(file);
@@ -304,15 +321,16 @@ function instance($$self, $$props, $$invalidate) {
 		};
 
 		fileReaderBinary.readAsArrayBuffer(file);
-		$$invalidate(4, state = "idle");
+		$$invalidate(5, state = "idle");
 	}
 
-	const click_handler = () => handleLiberate();
+	const click_handler = () => onClose();
+	const click_handler_1 = () => handleLiberate();
 
 	function input_binding($$value) {
 		binding_callbacks[$$value ? "unshift" : "push"](() => {
 			uploadElement = $$value;
-			$$invalidate(3, uploadElement);
+			$$invalidate(4, uploadElement);
 		});
 	}
 
@@ -321,17 +339,19 @@ function instance($$self, $$props, $$invalidate) {
 	function img_binding($$value) {
 		binding_callbacks[$$value ? "unshift" : "push"](() => {
 			imageElement = $$value;
-			$$invalidate(2, imageElement);
+			$$invalidate(3, imageElement);
 		});
 	}
 
 	$$self.$$set = $$props => {
 		if ("fromToken" in $$props) $$invalidate(0, fromToken = $$props.fromToken);
-		if ("vandalizer" in $$props) $$invalidate(7, vandalizer = $$props.vandalizer);
+		if ("vandalizer" in $$props) $$invalidate(8, vandalizer = $$props.vandalizer);
+		if ("onClose" in $$props) $$invalidate(1, onClose = $$props.onClose);
 	};
 
 	return [
 		fromToken,
+		onClose,
 		logs,
 		imageElement,
 		uploadElement,
@@ -340,6 +360,7 @@ function instance($$self, $$props, $$invalidate) {
 		handleUpload,
 		vandalizer,
 		click_handler,
+		click_handler_1,
 		input_binding,
 		change_handler,
 		img_binding
@@ -349,7 +370,7 @@ function instance($$self, $$props, $$invalidate) {
 class Vandalize extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance, create_fragment, safe_not_equal, { fromToken: 0, vandalizer: 7 });
+		init(this, options, instance, create_fragment, safe_not_equal, { fromToken: 0, vandalizer: 8, onClose: 1 });
 	}
 }
 

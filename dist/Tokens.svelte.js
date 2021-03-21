@@ -28,7 +28,7 @@ import Vandalize from "./Vandalize.svelte.js";
 
 function get_each_context(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[4] = list[i];
+	child_ctx[5] = list[i];
 	return child_ctx;
 }
 
@@ -94,7 +94,7 @@ function create_if_block_1(ctx) {
 function create_each_block(ctx) {
 	let li;
 	let div0;
-	let t0_value = /*t*/ ctx[4].metadata.name + "";
+	let t0_value = /*t*/ ctx[5].metadata.name + "";
 	let t0;
 	let t1;
 	let div1;
@@ -109,7 +109,7 @@ function create_each_block(ctx) {
 	let dispose;
 
 	function click_handler() {
-		return /*click_handler*/ ctx[3](/*t*/ ctx[4]);
+		return /*click_handler*/ ctx[3](/*t*/ ctx[5]);
 	}
 
 	return {
@@ -126,8 +126,8 @@ function create_each_block(ctx) {
 			button.textContent = "Select";
 			t4 = space();
 			attr(div0, "class", "header svelte-11x41wc");
-			if (img.src !== (img_src_value = /*t*/ ctx[4].metadata.image)) attr(img, "src", img_src_value);
-			attr(img, "alt", img_alt_value = /*t*/ ctx[4].metadata.description);
+			if (img.src !== (img_src_value = /*t*/ ctx[5].metadata.image)) attr(img, "src", img_src_value);
+			attr(img, "alt", img_alt_value = /*t*/ ctx[5].metadata.description);
 			attr(img, "class", "svelte-11x41wc");
 			attr(div1, "class", "body svelte-11x41wc");
 			attr(div2, "class", "footer svelte-11x41wc");
@@ -152,13 +152,13 @@ function create_each_block(ctx) {
 		},
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
-			if (dirty & /*list*/ 1 && t0_value !== (t0_value = /*t*/ ctx[4].metadata.name + "")) set_data(t0, t0_value);
+			if (dirty & /*list*/ 1 && t0_value !== (t0_value = /*t*/ ctx[5].metadata.name + "")) set_data(t0, t0_value);
 
-			if (dirty & /*list*/ 1 && img.src !== (img_src_value = /*t*/ ctx[4].metadata.image)) {
+			if (dirty & /*list*/ 1 && img.src !== (img_src_value = /*t*/ ctx[5].metadata.image)) {
 				attr(img, "src", img_src_value);
 			}
 
-			if (dirty & /*list*/ 1 && img_alt_value !== (img_alt_value = /*t*/ ctx[4].metadata.description)) {
+			if (dirty & /*list*/ 1 && img_alt_value !== (img_alt_value = /*t*/ ctx[5].metadata.description)) {
 				attr(img, "alt", img_alt_value);
 			}
 		},
@@ -179,7 +179,8 @@ function create_if_block(ctx) {
 	vandalize = new Vandalize({
 			props: {
 				vandalizer: /*vandalizer*/ ctx[1],
-				fromToken: /*fromToken*/ ctx[2]
+				fromToken: /*fromToken*/ ctx[2],
+				onClose: /*func*/ ctx[4]
 			}
 		});
 
@@ -198,6 +199,7 @@ function create_if_block(ctx) {
 			const vandalize_changes = {};
 			if (dirty & /*vandalizer*/ 2) vandalize_changes.vandalizer = /*vandalizer*/ ctx[1];
 			if (dirty & /*fromToken*/ 4) vandalize_changes.fromToken = /*fromToken*/ ctx[2];
+			if (dirty & /*fromToken*/ 4) vandalize_changes.onClose = /*func*/ ctx[4];
 			vandalize.$set(vandalize_changes);
 		},
 		i(local) {
@@ -300,12 +302,16 @@ function instance($$self, $$props, $$invalidate) {
 	let fromToken;
 	const click_handler = t => $$invalidate(2, fromToken = t);
 
+	const func = () => {
+		$$invalidate(2, fromToken = undefined);
+	};
+
 	$$self.$$set = $$props => {
 		if ("list" in $$props) $$invalidate(0, list = $$props.list);
 		if ("vandalizer" in $$props) $$invalidate(1, vandalizer = $$props.vandalizer);
 	};
 
-	return [list, vandalizer, fromToken, click_handler];
+	return [list, vandalizer, fromToken, click_handler, func];
 }
 
 class Tokens extends SvelteComponent {
