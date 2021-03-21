@@ -17,7 +17,7 @@
   }
 
   async function handleLiberate() {
-    log(`Stealing original image from ${fromToken.metadata.image}`);
+    log(`Get original image from ${fromToken.metadata.image}`);
     const imageReq = await fetch(fromToken.metadata.image);
     const image = await imageReq.blob();
     await handleVandalize(image);
@@ -33,7 +33,7 @@
     log(`Got image, size ${size} bytes`);
     const cid = await ipfsAdd(image);
     log(`Image uploaded to IPFS, CID ${cid}`);
-    log(`Making metadata PERMANENT! (remember: dolphins)`);
+    log(`Making metadata PERMANENT!)`);
     const metadata = {
       ...fromToken.metadata,
       image: toGateway(cid),
