@@ -38,7 +38,7 @@ function create_else_block(ctx) {
 }
 
 // (112:4) {#if state === "idle"}
-function create_if_block(ctx) {
+function create_if_block_1(ctx) {
 	let button;
 	let t1;
 	let input;
@@ -92,6 +92,41 @@ function create_if_block(ctx) {
 	};
 }
 
+// (129:2) {#if state === "done"}
+function create_if_block(ctx) {
+	let p;
+	let t0;
+	let button;
+	let mounted;
+	let dispose;
+
+	return {
+		c() {
+			p = element("p");
+			t0 = text("Operation completed successfully! ");
+			button = element("button");
+			button.textContent = "Close";
+			attr(p, "class", "note level-success");
+		},
+		m(target, anchor) {
+			insert(target, p, anchor);
+			append(p, t0);
+			append(p, button);
+
+			if (!mounted) {
+				dispose = listen(button, "click", /*click_handler_2*/ ctx[13]);
+				mounted = true;
+			}
+		},
+		p: noop,
+		d(detaching) {
+			if (detaching) detach(p);
+			mounted = false;
+			dispose();
+		}
+	};
+}
+
 function create_fragment(ctx) {
 	let div4;
 	let div0;
@@ -117,6 +152,7 @@ function create_fragment(ctx) {
 	let t10_value = /*logs*/ ctx[2].join("\n") + "";
 	let t10;
 	let t11;
+	let t12;
 	let div3;
 	let img;
 	let img_src_value;
@@ -125,12 +161,13 @@ function create_fragment(ctx) {
 	let dispose;
 
 	function select_block_type(ctx, dirty) {
-		if (/*state*/ ctx[5] === "idle") return create_if_block;
+		if (/*state*/ ctx[5] === "idle") return create_if_block_1;
 		return create_else_block;
 	}
 
 	let current_block_type = select_block_type(ctx, -1);
-	let if_block = current_block_type(ctx);
+	let if_block0 = current_block_type(ctx);
+	let if_block1 = /*state*/ ctx[5] === "done" && create_if_block(ctx);
 
 	return {
 		c() {
@@ -150,12 +187,14 @@ function create_fragment(ctx) {
 			t7 = text(t7_value);
 			t8 = space();
 			div1 = element("div");
-			if_block.c();
+			if_block0.c();
 			t9 = space();
 			div2 = element("div");
 			pre1 = element("pre");
 			t10 = text(t10_value);
 			t11 = space();
+			if (if_block1) if_block1.c();
+			t12 = space();
 			div3 = element("div");
 			img = element("img");
 			attr(div0, "class", "header svelte-1qflc1w");
@@ -183,15 +222,17 @@ function create_fragment(ctx) {
 			append(pre0, t7);
 			append(div4, t8);
 			append(div4, div1);
-			if_block.m(div1, null);
+			if_block0.m(div1, null);
 			append(div4, t9);
 			append(div4, div2);
 			append(div2, pre1);
 			append(pre1, t10);
 			append(div4, t11);
+			if (if_block1) if_block1.m(div4, null);
+			append(div4, t12);
 			append(div4, div3);
 			append(div3, img);
-			/*img_binding*/ ctx[13](img);
+			/*img_binding*/ ctx[14](img);
 
 			if (!mounted) {
 				dispose = listen(button, "click", /*click_handler*/ ctx[9]);
@@ -203,19 +244,32 @@ function create_fragment(ctx) {
 			if (dirty & /*fromToken*/ 1 && t5_value !== (t5_value = /*fromToken*/ ctx[0].uri + "")) set_data(t5, t5_value);
 			if (dirty & /*fromToken*/ 1 && t7_value !== (t7_value = JSON.stringify(/*fromToken*/ ctx[0].metadata, null, 4) + "")) set_data(t7, t7_value);
 
-			if (current_block_type === (current_block_type = select_block_type(ctx, dirty)) && if_block) {
-				if_block.p(ctx, dirty);
+			if (current_block_type === (current_block_type = select_block_type(ctx, dirty)) && if_block0) {
+				if_block0.p(ctx, dirty);
 			} else {
-				if_block.d(1);
-				if_block = current_block_type(ctx);
+				if_block0.d(1);
+				if_block0 = current_block_type(ctx);
 
-				if (if_block) {
-					if_block.c();
-					if_block.m(div1, null);
+				if (if_block0) {
+					if_block0.c();
+					if_block0.m(div1, null);
 				}
 			}
 
 			if (dirty & /*logs*/ 4 && t10_value !== (t10_value = /*logs*/ ctx[2].join("\n") + "")) set_data(t10, t10_value);
+
+			if (/*state*/ ctx[5] === "done") {
+				if (if_block1) {
+					if_block1.p(ctx, dirty);
+				} else {
+					if_block1 = create_if_block(ctx);
+					if_block1.c();
+					if_block1.m(div4, t12);
+				}
+			} else if (if_block1) {
+				if_block1.d(1);
+				if_block1 = null;
+			}
 
 			if (dirty & /*fromToken*/ 1 && img.src !== (img_src_value = /*fromToken*/ ctx[0].metadata.image)) {
 				attr(img, "src", img_src_value);
@@ -229,8 +283,9 @@ function create_fragment(ctx) {
 		o: noop,
 		d(detaching) {
 			if (detaching) detach(div4);
-			if_block.d();
-			/*img_binding*/ ctx[13](null);
+			if_block0.d();
+			if (if_block1) if_block1.d();
+			/*img_binding*/ ctx[14](null);
 			mounted = false;
 			dispose();
 		}
@@ -259,7 +314,7 @@ function instance($$self, $$props, $$invalidate) {
 		const imageReq = await fetch(fromToken.metadata.image);
 		const image = await imageReq.blob();
 		await handleVandalize(image);
-		$$invalidate(5, state = "idle");
+		$$invalidate(5, state = "done");
 	}
 
 	async function handleVandalize(image) {
@@ -321,7 +376,7 @@ function instance($$self, $$props, $$invalidate) {
 		};
 
 		fileReaderBinary.readAsArrayBuffer(file);
-		$$invalidate(5, state = "idle");
+		$$invalidate(5, state = "done");
 	}
 
 	const click_handler = () => onClose();
@@ -335,6 +390,7 @@ function instance($$self, $$props, $$invalidate) {
 	}
 
 	const change_handler = e => handleUpload();
+	const click_handler_2 = () => onClose();
 
 	function img_binding($$value) {
 		binding_callbacks[$$value ? "unshift" : "push"](() => {
@@ -363,6 +419,7 @@ function instance($$self, $$props, $$invalidate) {
 		click_handler_1,
 		input_binding,
 		change_handler,
+		click_handler_2,
 		img_binding
 	];
 }

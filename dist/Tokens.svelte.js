@@ -32,7 +32,7 @@ function get_each_context(ctx, list, i) {
 	return child_ctx;
 }
 
-// (48:0) {#if list}
+// (49:0) {#if list && !fromToken}
 function create_if_block_1(ctx) {
 	let ul;
 	let each_value = /*list*/ ctx[0];
@@ -50,7 +50,7 @@ function create_if_block_1(ctx) {
 				each_blocks[i].c();
 			}
 
-			attr(ul, "class", "svelte-11x41wc");
+			attr(ul, "class", "svelte-1c0f2mk");
 		},
 		m(target, anchor) {
 			insert(target, ul, anchor);
@@ -90,7 +90,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (50:4) {#each list as t}
+// (51:4) {#each list as t}
 function create_each_block(ctx) {
 	let li;
 	let div0;
@@ -125,13 +125,13 @@ function create_each_block(ctx) {
 			button = element("button");
 			button.textContent = "Select";
 			t4 = space();
-			attr(div0, "class", "header svelte-11x41wc");
+			attr(div0, "class", "header svelte-1c0f2mk");
 			if (img.src !== (img_src_value = /*t*/ ctx[5].metadata.image)) attr(img, "src", img_src_value);
 			attr(img, "alt", img_alt_value = /*t*/ ctx[5].metadata.description);
-			attr(img, "class", "svelte-11x41wc");
-			attr(div1, "class", "body svelte-11x41wc");
-			attr(div2, "class", "footer svelte-11x41wc");
-			attr(li, "class", "token svelte-11x41wc");
+			attr(img, "class", "svelte-1c0f2mk");
+			attr(div1, "class", "body svelte-1c0f2mk");
+			attr(div2, "class", "footer svelte-1c0f2mk");
+			attr(li, "class", "token svelte-1c0f2mk");
 		},
 		m(target, anchor) {
 			insert(target, li, anchor);
@@ -170,7 +170,7 @@ function create_each_block(ctx) {
 	};
 }
 
-// (66:0) {#if fromToken}
+// (67:0) {#if fromToken}
 function create_if_block(ctx) {
 	let div;
 	let vandalize;
@@ -188,7 +188,7 @@ function create_if_block(ctx) {
 		c() {
 			div = element("div");
 			create_component(vandalize.$$.fragment);
-			attr(div, "class", "vandalizer svelte-11x41wc");
+			attr(div, "class", "vandalizer svelte-1c0f2mk");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -222,7 +222,7 @@ function create_fragment(ctx) {
 	let t;
 	let if_block1_anchor;
 	let current;
-	let if_block0 = /*list*/ ctx[0] && create_if_block_1(ctx);
+	let if_block0 = /*list*/ ctx[0] && !/*fromToken*/ ctx[2] && create_if_block_1(ctx);
 	let if_block1 = /*fromToken*/ ctx[2] && create_if_block(ctx);
 
 	return {
@@ -240,7 +240,7 @@ function create_fragment(ctx) {
 			current = true;
 		},
 		p(ctx, [dirty]) {
-			if (/*list*/ ctx[0]) {
+			if (/*list*/ ctx[0] && !/*fromToken*/ ctx[2]) {
 				if (if_block0) {
 					if_block0.p(ctx, dirty);
 				} else {
