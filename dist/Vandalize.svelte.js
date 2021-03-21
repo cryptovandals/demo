@@ -369,6 +369,7 @@ function instance($$self, $$props, $$invalidate) {
 		fileReaderBinary.onload = async () => {
 			try {
 				await handleVandalize(fileReaderBinary.result);
+				$$invalidate(5, state = "done");
 			} catch(e) {
 				console.error(e);
 				throw e;
@@ -376,7 +377,6 @@ function instance($$self, $$props, $$invalidate) {
 		};
 
 		fileReaderBinary.readAsArrayBuffer(file);
-		$$invalidate(5, state = "done");
 	}
 
 	const click_handler = () => onClose();
