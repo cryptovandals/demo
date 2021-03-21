@@ -2,7 +2,7 @@
   import { ipfsAdd, toGateway } from "./ipfs";
 
   import type { IToken } from "./state";
-  import type { CryptoVandals, ERC721 } from "./typechain";
+  import type { CryptoVandals } from "./typechain";
 
   export let fromToken: IToken;
   export let vandalizer: CryptoVandals;
@@ -21,40 +21,6 @@
     const imageReq = await fetch(fromToken.metadata.image);
     const image = await imageReq.blob();
     await handleVandalize(image);
-
-    /*
-    log(`Original image is ${image.size} bytes`);
-    const cid = await ipfsAdd(image);
-    log(`Image uploaded to IPFS, CID ${cid}`);
-    log(`Making metadata PERMANENT! (remember: dolphins)`);
-    const metadata = {
-      ...fromToken.metadata,
-      image: toGateway(cid),
-    };
-    log(`New metadata`);
-    log(JSON.stringify(metadata, null, 4));
-    const metadataCid = await ipfsAdd(JSON.stringify(metadata, null, 4));
-    log(`Metadata uploaded to IPFS, CID ${metadataCid}`);
-
-    log("Ask our valued customer to sign the approve tx");
-    const approveTx = await fromToken.contract.approve(
-      vandalizer.address,
-      fromToken.id
-    );
-    log(`Approve tx hash ${approveTx.hash}`);
-    const approveReceipt = await approveTx.wait();
-    log(`Tx included in block ${approveReceipt.blockNumber}`);
-    log(
-      `${fromToken.contract.address}, ${fromToken.id}, ${toGateway(
-        metadataCid
-      )}`
-    );
-    await vandalizer.vandalize(
-      fromToken.contract.address,
-      fromToken.id,
-      toGateway(metadataCid)
-    );
-    */
   }
 
   async function handleVandalize(image: ArrayBuffer | Blob) {
@@ -95,8 +61,6 @@
       fromToken.id,
       toGateway(metadataCid)
     );
-    //await fromToken.contract.approve(vandalizer.address, fromToken.id);
-    //await vandalizer.vandalize(contract.address, id, tokenURI);
   }
 
   async function handleUpload() {
