@@ -17,7 +17,21 @@
     font-weight: bold;
     font-style: italic;
     font-size: var(--size-m);
-    margin-bottom: var(--size-m);
+    margin-bottom: 0;
+  }
+  .links {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: var(--size-xl);
+    background-color: black;
+    color: white;
+    padding: var(--size-m) var(--size-s);
+    display: flex;
+    justify-content: space-around;
+  }
+  .links a {
+    display: inline-block;
   }
 </style>
 
@@ -45,8 +59,19 @@
       >
     </div>
   </div>
+  <p class="links">
+    <a href="https://github.com/cryptovandals/contracts/blob/main/MANIFESTO.md"
+      >CryptoVandals MANIFESTO</a
+    >
+    <a href="https://github.com/cryptovandals/demo">Dapp code</a>
+    <a href="https://github.com/cryptovandals/contracts">Contract code</a>
+    <a href="https://twitter.com/cryptovandals">Twitter</a>
+  </p>
+
   <section>
-    Your address: {$address}
+    <p>
+      Your address: {$address}
+    </p>
 
     {#if $cryptoVandals && $kitty}
       {#if $kittyTokens && $kittyTokens.length === 0}

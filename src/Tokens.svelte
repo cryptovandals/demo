@@ -6,7 +6,7 @@
   export let list: IToken[] | undefined;
   export let vandalizer: CryptoVandals;
 
-  let fromToken: IToken;
+  let fromToken: IToken | undefined;
 </script>
 
 <style>
@@ -68,6 +68,12 @@
 
 {#if fromToken}
   <div class="vandalizer">
-    <Vandalize {vandalizer} {fromToken} />
+    <Vandalize
+      {vandalizer}
+      {fromToken}
+      onClose={() => {
+        fromToken = undefined;
+      }}
+    />
   </div>
 {/if}

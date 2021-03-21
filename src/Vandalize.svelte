@@ -6,6 +6,7 @@
 
   export let fromToken: IToken;
   export let vandalizer: CryptoVandals;
+  export let onClose: () => void;
 
   let logs: string[] = [];
   let imageElement: HTMLImageElement;
@@ -122,6 +123,7 @@
 <div class="token">
   <div class="header">
     <h2>{fromToken.metadata.name}</h2>
+    <button on:click={() => onClose()}>Close</button>
     <code>Token URI: {fromToken.uri}</code>
     <pre>{JSON.stringify(fromToken.metadata, null, 4)}</pre>
   </div>
