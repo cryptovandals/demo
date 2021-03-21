@@ -77,14 +77,6 @@ let current_component;
 function set_current_component(component) {
   current_component = component;
 }
-function get_current_component() {
-  if (!current_component)
-    throw new Error("Function called outside component initialization");
-  return current_component;
-}
-function onMount(fn) {
-  get_current_component().$$.on_mount.push(fn);
-}
 const dirty_components = [];
 const binding_callbacks = [];
 const render_callbacks = [];
@@ -288,4 +280,4 @@ class SvelteComponent {
   }
 }
 
-export { is_function as A, SvelteComponent as S, append as a, attr as b, check_outros as c, component_subscribe as d, create_component as e, destroy_component as f, detach as g, element as h, empty as i, group_outros as j, init as k, insert as l, listen as m, mount_component as n, onMount as o, noop as p, set_data as q, space as r, safe_not_equal as s, text as t, transition_in as u, transition_out as v, destroy_each as w, binding_callbacks as x, run_all as y, subscribe as z };
+export { SvelteComponent as S, append as a, attr as b, check_outros as c, component_subscribe as d, create_component as e, destroy_component as f, detach as g, element as h, empty as i, group_outros as j, init as k, insert as l, mount_component as m, noop as n, set_data as o, space as p, transition_in as q, transition_out as r, safe_not_equal as s, text as t, listen as u, destroy_each as v, binding_callbacks as w, run_all as x, subscribe as y, is_function as z };

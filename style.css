@@ -64,6 +64,10 @@ section {
   padding: 0 var(--size);
 }
 
+section.no-padding {
+  padding: 0;
+}
+
 a,
 a:visited {
   color: inherit;
@@ -242,4 +246,61 @@ button:disabled,
 
 .fullpage p {
   font-size: var(--size-l);
+}
+
+/* https://tympanus.net/codrops/2020/03/31/css-only-marquee-effect/ */
+.marquee {
+  position: relative;
+  overflow: hidden;
+  --offset: 20vw;
+  --move-initial: calc(-25% + var(--offset));
+  --move-final: calc(-50% + var(--offset));
+}
+
+.marquee__inner {
+  width: fit-content;
+  display: flex;
+  position: relative;
+  transform: translate3d(var(--move-initial), 0, 0);
+  animation: marquee 30s linear infinite;
+  animation-play-state: paused;
+}
+
+.marquee span {
+  font-size: inherit;
+  padding: 0 2vw;
+  white-space: nowrap;
+}
+
+.marquee .marquee__inner {
+  animation-play-state: running;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translate3d(var(--move-initial), 0, 0);
+  }
+
+  100% {
+    transform: translate3d(var(--move-final), 0, 0);
+  }
+}
+
+.note {
+  text-align: center;
+  margin: 0;
+  padding: 10px;
+  font-size: 1.2rem;
+}
+.note.level-error {
+  color: white;
+  background-color: tomato;
+}
+.note.level-warning {
+  color: black;
+  background-color: yellow;
+}
+.note.level-info {
+  color: white;
+  background-color: blue;
 }

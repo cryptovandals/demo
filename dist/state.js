@@ -45,6 +45,7 @@ export const kitty = derived([wallet, chainId], ([$wallet, $chainId], set) => {
 });
 export const kittyTokens = derived([kitty, address], ([$kitty, $address], set) => {
   if (!$kitty || !$address) {
+    set([]);
     return;
   }
   (async () => {
@@ -90,6 +91,7 @@ export const cryptoVandals = derived([wallet, chainId], ([$wallet, $chainId], se
 });
 export const cryptoVandalsTokens = derived([cryptoVandals, address], ([$cryptoVandals, $address], set) => {
   if (!$cryptoVandals || !$address) {
+    set([]);
     return;
   }
   (async () => {
