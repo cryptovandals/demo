@@ -17,16 +17,34 @@
   }
 
   li {
+    max-width: 300px;
     list-style-type: none;
   }
 
   .token {
-    max-width: 300px;
+    border: 1px solid #ccc;
+    border-radius: var(--size-xxs);
+    margin: 0 var(--size-s);
   }
 
+  .token .footer {
+    border-top: 1px solid #ccc;
+  }
+
+  .token .header {
+    background-color: hotpink;
+  }
+  .token .header,
+  .token .body,
+  .token .footer {
+    padding: var(--size-s);
+  }
   img {
     display: block;
     width: 100%;
+  }
+  .vandalizer {
+    margin-top: var(--size-xl);
   }
 </style>
 
@@ -34,14 +52,22 @@
   <ul>
     {#each list as t}
       <li class="token">
-        {t.metadata.name}
-        <button on:click={() => (fromToken = t)}>Select</button>
-        <img src={t.metadata.image} alt={t.metadata.description} />
+        <div class="header">
+          {t.metadata.name}
+        </div>
+        <div class="body">
+          <img src={t.metadata.image} alt={t.metadata.description} />
+        </div>
+        <div class="footer">
+          <button on:click={() => (fromToken = t)}>Select</button>
+        </div>
       </li>
     {/each}
   </ul>
 {/if}
 
 {#if fromToken}
-  <Vandalize {vandalizer} {fromToken} />
+  <div class="vandalizer">
+    <Vandalize {vandalizer} {fromToken} />
+  </div>
 {/if}

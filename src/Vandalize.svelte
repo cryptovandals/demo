@@ -89,33 +89,56 @@
 
 <style>
   div {
-    background-color: gray;
   }
 
   img {
     width: 100%;
   }
+  .token {
+    border: 1px solid #ccc;
+    border-radius: var(--size-xxs);
+    margin: 0 var(--size-s);
+  }
+
+  .token .log {
+    border-bottom: 1px solid #ccc;
+  }
+
+  .token .header {
+    background-color: hotpink;
+  }
+  .token .header,
+  .token .body,
+  .token .log {
+    padding: var(--size-s);
+  }
 </style>
 
-<div>
-  <div class="metadata">
+<div class="token">
+  <div class="header">
     <h2>{fromToken.metadata.name}</h2>
     <code>Token URI: {fromToken.uri}</code>
     <pre>{JSON.stringify(fromToken.metadata, null, 4)}</pre>
   </div>
-  <button on:click={() => handleLiberate()}>Liberate</button>
-  <input
-    bind:this={uploadElement}
-    type="file"
-    id="image-file"
-    name="image"
-    on:change={(e) => handleUpload()}
-  />
-  <label for="image-file">Vandalize</label>
-  <img
-    bind:this={imageElement}
-    src={fromToken.metadata.image}
-    alt={fromToken.metadata.description}
-  />
-  <pre>{logs.join('\n')}</pre>
+  <div class="header">
+    <button on:click={() => handleLiberate()}>Liberate</button>
+    <input
+      bind:this={uploadElement}
+      type="file"
+      id="image-file"
+      name="image"
+      on:change={(e) => handleUpload()}
+    />
+    <label for="image-file">Vandalize</label>
+  </div>
+  <div class="log">
+    <pre>{logs.join('\n')}</pre>
+  </div>
+  <div class="body">
+    <img
+      bind:this={imageElement}
+      src={fromToken.metadata.image}
+      alt={fromToken.metadata.description}
+    />
+  </div>
 </div>
