@@ -268,7 +268,7 @@ button:disabled,
 
 .marquee span {
   font-size: inherit;
-  padding: 0 2vw;
+  padding: 0 var(--size-s);
   white-space: nowrap;
 }
 
@@ -303,4 +303,8 @@ button:disabled,
 .note.level-info {
   color: white;
   background-color: blue;
+}
+.note.level-success {
+  color: white;
+  background-color: var(--join--color-success);
 }

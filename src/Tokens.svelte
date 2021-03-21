@@ -12,6 +12,7 @@
 <style>
   ul {
     display: flex;
+    flex-wrap: wrap;
     margin: 0;
     padding: 0;
   }
@@ -24,7 +25,7 @@
   .token {
     border: 1px solid #ccc;
     border-radius: var(--size-xxs);
-    margin: 0 var(--size-s);
+    margin: 0 var(--size-s) var(--size-s);
   }
 
   .token .footer {
@@ -48,7 +49,7 @@
   }
 </style>
 
-{#if list}
+{#if list && !fromToken}
   <ul>
     {#each list as t}
       <li class="token">

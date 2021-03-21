@@ -24,7 +24,7 @@
     const imageReq = await fetch(fromToken.metadata.image);
     const image = await imageReq.blob();
     await handleVandalize(image);
-    state = "idle";
+    state = "done";
   }
 
   async function handleVandalize(image: ArrayBuffer | Blob) {
@@ -89,7 +89,7 @@
       }
     };
     fileReaderBinary.readAsArrayBuffer(file);
-    state = "idle";
+    state = "done";
   }
 </script>
 
@@ -145,6 +145,13 @@
   <div class="log">
     <pre>{logs.join('\n')}</pre>
   </div>
+  {#if state === "done"}
+    <p class="note level-success">
+      Operation completed successfully! <button on:click={() => onClose()}
+        >Close</button
+      >
+    </p>
+  {/if}
   <div class="body">
     <img
       bind:this={imageElement}

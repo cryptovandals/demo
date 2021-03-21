@@ -49,14 +49,10 @@
         >Welcome to CryptoVandals.com, you can be anything you want at
         CryptoVandals.com</span
       >
-      <span
-        >Welcome to CryptoVandals.com, you can be anything you want at
-        CryptoVandals.com</span
-      >
-      <span
-        >Welcome to CryptoVandals.com, you can be anything you want at
-        CryptoVandals.com</span
-      >
+      <span>The only limit is your imagination at CryptoVandals.com</span>
+      <span>The infinite is possible at CryptoVandals.com</span>
+      <span>The unattainable is unknown at CryptoVandals.com</span>
+      <span>This is CryptoVandals.com</span>
     </div>
   </div>
   <p class="links">
