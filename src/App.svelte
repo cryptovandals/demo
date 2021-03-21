@@ -13,8 +13,32 @@
   import Tokens from "./Tokens.svelte";
 </script>
 
+<style>
+  h1 {
+    display: none;
+  }
+  img {
+    width: 100%;
+  }
+  section {
+    text-align: center;
+  }
+</style>
+
 {#if !$address}
-  <button on:click={connect}>Connect</button>
+  <div class="fullpage">
+    <section>
+      <h1>CryptoVandals</h1>
+      <img src="./images/header.png" alt="CryptoVandals logo" />
+      <button class="button-shadow" on:click={connect}
+        ><span>Connect your wallet</span></button
+      >
+      <br />
+      <a href="https://github.com/cryptovandals/contracts"
+        >About CryptoVandals</a
+      >
+    </section>
+  </div>
 {:else}
   Your address: {$address}
 
