@@ -47,10 +47,13 @@
   .vandalizer {
     margin-top: var(--size-xl);
   }
+  .hidden {
+    visibility: none;
+  }
 </style>
 
-{#if list && !fromToken}
-  <ul>
+{#if list}
+  <ul class:hidden={fromToken}>
     {#each list as t}
       <li class="token">
         <div class="header">
