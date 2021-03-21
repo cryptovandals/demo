@@ -1,7 +1,12 @@
 <script lang="typescript">
+  import Vandalize from "./Vandalize.svelte";
   import type { IToken } from "./state";
+  import type { CryptoVandals } from "./typechain";
 
   export let list: IToken[] | undefined;
+  export let vandalizer: CryptoVandals;
+
+  let fromToken: IToken;
 </script>
 
 <style>
@@ -30,9 +35,13 @@
     {#each list as t}
       <li class="token">
         {t.metadata.name}
-        <button>Vandalize</button>
+        <button on:click={() => (fromToken = t)}>Select</button>
         <img src={t.metadata.image} alt={t.metadata.description} />
       </li>
     {/each}
   </ul>
+{/if}
+
+{#if fromToken}
+  <Vandalize {vandalizer} {fromToken} />
 {/if}

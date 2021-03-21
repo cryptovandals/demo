@@ -28,11 +28,13 @@ interface INetworkMismatch {
 
 export interface IToken {
   id: string;
+  uri: string;
   contract: ERC721;
   metadata: ITokenMetadata;
 }
 
 export interface ITokenMetadata {
+  id: string;
   name: string;
   description: string;
   image: string;
@@ -74,7 +76,7 @@ export const kitty = derived<
   if ($wallet && $chainId) {
     const kittyContract = Kitty__factory.connect(
       NETWORKS[$chainId]["Kitty"],
-      $wallet
+      $wallet.getSigner()
     );
     set(kittyContract);
   } else {
@@ -99,6 +101,7 @@ export const kittyTokens = derived<
       const metadata = (await metadataReq.json()) as ITokenMetadata;
       buffer.push({
         id: tokenId.toString(),
+        uri: tokenUri,
         contract: $kitty,
         metadata,
       });
@@ -114,7 +117,7 @@ export const cryptoVandals = derived<
   if ($wallet && $chainId) {
     const cryptoVandalsContract = CryptoVandals__factory.connect(
       NETWORKS[$chainId]["CryptoVandals"],
-      $wallet
+      $wallet.getSigner()
     );
     set(cryptoVandalsContract);
   } else {
@@ -139,6 +142,7 @@ export const cryptoVandalsTokens = derived<
       const metadata = (await metadataReq.json()) as ITokenMetadata;
       buffer.push({
         id: tokenId.toString(),
+        uri: tokenUri,
         contract: $cryptoVandals,
         metadata,
       });

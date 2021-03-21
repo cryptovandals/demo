@@ -1,14 +1,15 @@
 <script lang="typescript">
   import { onMount } from "svelte";
   import { cat } from "./ipfs";
-  import { connect, address, kittyTokens } from "./state";
+  import {
+    connect,
+    address,
+    kittyTokens,
+    cryptoVandalsTokens,
+    cryptoVandals,
+    kitty,
+  } from "./state";
   import Tokens from "./Tokens.svelte";
-
-  const ipfsPath = "QmYKVXgkqbvvQ2oWvciA838jmbCpLGGQbrAfRBjneDUWXn";
-
-  onMount(async () => {
-    cat(ipfsPath);
-  });
 </script>
 
 {#if !$address}
@@ -16,5 +17,11 @@
 {:else}
   Your address: {$address}
 
-  <Tokens list={$kittyTokens} />
+  {#if $cryptoVandals && $kitty}
+    <h2>Kitty contract</h2>
+    <Tokens list={$kittyTokens} vandalizer={$cryptoVandals} />
+
+    <h2>CryptoVandals contract</h2>
+    <Tokens list={$cryptoVandalsTokens} vandalizer={$cryptoVandals} />
+  {/if}
 {/if}
