@@ -1,4 +1,4 @@
-import { ethers } from "ethers";
+import { BigNumber, BigNumberish, ethers } from "ethers";
 import networkJson from "./typechain/network.json";
 import { writable, derived } from "svelte/store";
 import {
@@ -8,6 +8,9 @@ import {
   CryptoVandals,
   CryptoVandals__factory,
 } from "./typechain";
+
+const AddressZero = ethers.constants.AddressZero;
+const AddressOne = AddressZero.replace(/.$/, "1");
 
 if (localStorage.getItem("autoconnect")) {
   console.log("Autoconnect to wallet");
@@ -91,23 +94,41 @@ export const kittyTokens = derived<
   if (!$kitty || !$address) {
     return;
   }
+
   (async () => {
-    const buffer: IToken[] = [];
-    const balanceOf = (await $kitty.balanceOf($address)).toNumber();
-    for (let i = 0; i < balanceOf; i++) {
-      const tokenId = await $kitty.tokenOfOwnerByIndex($address, i);
-      const tokenUri = await $kitty.tokenURI(tokenId);
+    let buffer: IToken[] = [];
+
+    async function load(tokenId: BigNumberish) {
+      const tokenUri = await $kitty!.tokenURI(tokenId);
       const metadataReq = await fetch(tokenUri);
       const metadata = (await metadataReq.json()) as ITokenMetadata;
       buffer.push({
         id: tokenId.toString(),
         uri: tokenUri,
-        contract: $kitty,
+        contract: $kitty!,
         metadata,
       });
       set(buffer);
     }
+
+    const balanceOf = (await $kitty.balanceOf($address)).toNumber();
+    for (let i = 0; i < balanceOf; i++) {
+      const tokenId = await $kitty.tokenOfOwnerByIndex($address, i);
+      load(tokenId);
+    }
+    const filterMint = $kitty.filters.Transfer(AddressZero, $address, null);
+    $kitty.on(filterMint, function (from, to, tokenId) {
+      load(tokenId);
+    });
+    const filterBurn = $kitty.filters.Transfer($address, AddressOne, null);
+    $kitty.on(filterBurn, function (from, to, tokenId) {
+      buffer = buffer.filter((token) => token.id !== tokenId.toString());
+      set(buffer);
+    });
   })();
+  return () => {
+    $kitty.removeAllListeners();
+  };
 });
 
 export const cryptoVandals = derived<
@@ -133,20 +154,40 @@ export const cryptoVandalsTokens = derived<
     return;
   }
   (async () => {
-    const buffer: IToken[] = [];
-    const balanceOf = (await $cryptoVandals.balanceOf($address)).toNumber();
-    for (let i = 0; i < balanceOf; i++) {
-      const tokenId = await $cryptoVandals.tokenOfOwnerByIndex($address, i);
-      const tokenUri = await $cryptoVandals.tokenURI(tokenId);
+    let buffer: IToken[] = [];
+    async function load(tokenId: BigNumberish) {
+      const tokenUri = await $cryptoVandals!.tokenURI(tokenId);
       const metadataReq = await fetch(tokenUri);
       const metadata = (await metadataReq.json()) as ITokenMetadata;
       buffer.push({
         id: tokenId.toString(),
         uri: tokenUri,
-        contract: $cryptoVandals,
+        contract: $cryptoVandals!,
         metadata,
       });
       set(buffer);
     }
+    const balanceOf = (await $cryptoVandals.balanceOf($address)).toNumber();
+    for (let i = 0; i < balanceOf; i++) {
+      const tokenId = await $cryptoVandals.tokenOfOwnerByIndex($address, i);
+      load(tokenId);
+    }
+    const filterMint = $cryptoVandals.filters.Transfer(
+      AddressZero,
+      $address,
+      null
+    );
+    $cryptoVandals.on(filterMint, function (from, to, tokenId) {
+      load(tokenId);
+    });
+    const filterBurn = $cryptoVandals.filters.Transfer(
+      $address,
+      AddressOne,
+      null
+    );
+    $cryptoVandals.on(filterBurn, function (from, to, tokenId) {
+      buffer = buffer.filter((token) => token.id !== tokenId.toString());
+      set(buffer);
+    });
   })();
 });
