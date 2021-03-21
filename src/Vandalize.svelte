@@ -83,13 +83,13 @@
     fileReaderBinary.onload = async () => {
       try {
         await handleVandalize(fileReaderBinary.result as ArrayBuffer);
+        state = "done";
       } catch (e) {
         console.error(e);
         throw e;
       }
     };
     fileReaderBinary.readAsArrayBuffer(file);
-    state = "done";
   }
 </script>
 

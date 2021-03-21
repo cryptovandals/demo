@@ -305,6 +305,6 @@ button:disabled,
   background-color: blue;
 }
 .note.level-success {
-  color: white;
+  color: black;
   background-color: var(--join--color-success);
 }
