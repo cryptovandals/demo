@@ -10,6 +10,7 @@
   let logs: string[] = [];
   let imageElement: HTMLImageElement;
   let uploadElement: HTMLInputElement;
+  let state = "idle";
 
   function log(s: string) {
     console.log(s);
@@ -17,10 +18,12 @@
   }
 
   async function handleLiberate() {
+    state = "working";
     log(`Get original image from ${fromToken.metadata.image}`);
     const imageReq = await fetch(fromToken.metadata.image);
     const image = await imageReq.blob();
     await handleVandalize(image);
+    state = "idle";
   }
 
   async function handleVandalize(image: ArrayBuffer | Blob) {
@@ -64,6 +67,7 @@
   }
 
   async function handleUpload() {
+    state = "working";
     if (!uploadElement.files) {
       return;
     }
@@ -84,6 +88,7 @@
       }
     };
     fileReaderBinary.readAsArrayBuffer(file);
+    state = "idle";
   }
 </script>
 
@@ -121,15 +126,19 @@
     <pre>{JSON.stringify(fromToken.metadata, null, 4)}</pre>
   </div>
   <div class="header">
-    <button on:click={() => handleLiberate()}>Liberate</button>
-    <input
-      bind:this={uploadElement}
-      type="file"
-      id="image-file"
-      name="image"
-      on:change={(e) => handleUpload()}
-    />
-    <label for="image-file">Vandalize</label>
+    {#if state === "idle"}
+      <button on:click={() => handleLiberate()}>Liberate</button>
+      <input
+        bind:this={uploadElement}
+        type="file"
+        id="image-file"
+        name="image"
+        on:change={(e) => handleUpload()}
+      />
+      <label for="image-file">Vandalize</label>
+    {:else}
+      Working, please wait...
+    {/if}
   </div>
   <div class="log">
     <pre>{logs.join('\n')}</pre>
