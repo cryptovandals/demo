@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "preinstall": "cp node_modules/ipfs-http-client/dist/index.min.js public/ipfs-http-client.min.js",
+    "postinstall": "cp node_modules/ipfs-http-client/dist/index.min.js public/ipfs-http-client.min.js",
     "start": "snowpack dev",
     "build": "snowpack build",
     "test": "web-test-runner \"src/**/*.test.ts\""
