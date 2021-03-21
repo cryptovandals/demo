@@ -73,6 +73,9 @@ function set_data(text2, data) {
   if (text2.wholeText !== data)
     text2.data = data;
 }
+function toggle_class(element2, name, toggle) {
+  element2.classList[toggle ? "add" : "remove"](name);
+}
 let current_component;
 function set_current_component(component) {
   current_component = component;
@@ -280,4 +283,4 @@ class SvelteComponent {
   }
 }
 
-export { SvelteComponent as S, append as a, attr as b, check_outros as c, component_subscribe as d, create_component as e, destroy_component as f, detach as g, element as h, empty as i, group_outros as j, init as k, insert as l, mount_component as m, noop as n, set_data as o, space as p, transition_in as q, transition_out as r, safe_not_equal as s, text as t, listen as u, destroy_each as v, binding_callbacks as w, run_all as x, subscribe as y, is_function as z };
+export { is_function as A, SvelteComponent as S, append as a, attr as b, check_outros as c, component_subscribe as d, create_component as e, destroy_component as f, detach as g, element as h, empty as i, group_outros as j, init as k, insert as l, mount_component as m, noop as n, set_data as o, space as p, transition_in as q, transition_out as r, safe_not_equal as s, text as t, listen as u, destroy_each as v, toggle_class as w, binding_callbacks as x, run_all as y, subscribe as z };

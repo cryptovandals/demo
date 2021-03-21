@@ -20,6 +20,7 @@ import {
 	set_data,
 	space,
 	text,
+	toggle_class,
 	transition_in,
 	transition_out
 } from "../_snowpack/pkg/svelte/internal.js";
@@ -32,7 +33,7 @@ function get_each_context(ctx, list, i) {
 	return child_ctx;
 }
 
-// (49:0) {#if list && !fromToken}
+// (52:0) {#if list}
 function create_if_block_1(ctx) {
 	let ul;
 	let each_value = /*list*/ ctx[0];
@@ -50,7 +51,8 @@ function create_if_block_1(ctx) {
 				each_blocks[i].c();
 			}
 
-			attr(ul, "class", "svelte-1c0f2mk");
+			attr(ul, "class", "svelte-fl5ttt");
+			toggle_class(ul, "hidden", /*fromToken*/ ctx[2]);
 		},
 		m(target, anchor) {
 			insert(target, ul, anchor);
@@ -82,6 +84,10 @@ function create_if_block_1(ctx) {
 
 				each_blocks.length = each_value.length;
 			}
+
+			if (dirty & /*fromToken*/ 4) {
+				toggle_class(ul, "hidden", /*fromToken*/ ctx[2]);
+			}
 		},
 		d(detaching) {
 			if (detaching) detach(ul);
@@ -90,7 +96,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (51:4) {#each list as t}
+// (54:4) {#each list as t}
 function create_each_block(ctx) {
 	let li;
 	let div0;
@@ -125,13 +131,13 @@ function create_each_block(ctx) {
 			button = element("button");
 			button.textContent = "Select";
 			t4 = space();
-			attr(div0, "class", "header svelte-1c0f2mk");
+			attr(div0, "class", "header svelte-fl5ttt");
 			if (img.src !== (img_src_value = /*t*/ ctx[5].metadata.image)) attr(img, "src", img_src_value);
 			attr(img, "alt", img_alt_value = /*t*/ ctx[5].metadata.description);
-			attr(img, "class", "svelte-1c0f2mk");
-			attr(div1, "class", "body svelte-1c0f2mk");
-			attr(div2, "class", "footer svelte-1c0f2mk");
-			attr(li, "class", "token svelte-1c0f2mk");
+			attr(img, "class", "svelte-fl5ttt");
+			attr(div1, "class", "body svelte-fl5ttt");
+			attr(div2, "class", "footer svelte-fl5ttt");
+			attr(li, "class", "token svelte-fl5ttt");
 		},
 		m(target, anchor) {
 			insert(target, li, anchor);
@@ -170,7 +176,7 @@ function create_each_block(ctx) {
 	};
 }
 
-// (67:0) {#if fromToken}
+// (70:0) {#if fromToken}
 function create_if_block(ctx) {
 	let div;
 	let vandalize;
@@ -188,7 +194,7 @@ function create_if_block(ctx) {
 		c() {
 			div = element("div");
 			create_component(vandalize.$$.fragment);
-			attr(div, "class", "vandalizer svelte-1c0f2mk");
+			attr(div, "class", "vandalizer svelte-fl5ttt");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -222,7 +228,7 @@ function create_fragment(ctx) {
 	let t;
 	let if_block1_anchor;
 	let current;
-	let if_block0 = /*list*/ ctx[0] && !/*fromToken*/ ctx[2] && create_if_block_1(ctx);
+	let if_block0 = /*list*/ ctx[0] && create_if_block_1(ctx);
 	let if_block1 = /*fromToken*/ ctx[2] && create_if_block(ctx);
 
 	return {
@@ -240,7 +246,7 @@ function create_fragment(ctx) {
 			current = true;
 		},
 		p(ctx, [dirty]) {
-			if (/*list*/ ctx[0] && !/*fromToken*/ ctx[2]) {
+			if (/*list*/ ctx[0]) {
 				if (if_block0) {
 					if_block0.p(ctx, dirty);
 				} else {
