@@ -20,6 +20,78 @@ import {
 
 import { ipfsAdd, toGateway } from "./ipfs.js";
 
+function create_else_block(ctx) {
+	let t;
+
+	return {
+		c() {
+			t = text("Working, please wait...");
+		},
+		m(target, anchor) {
+			insert(target, t, anchor);
+		},
+		p: noop,
+		d(detaching) {
+			if (detaching) detach(t);
+		}
+	};
+}
+
+// (110:4) {#if state === "idle"}
+function create_if_block(ctx) {
+	let button;
+	let t1;
+	let input;
+	let t2;
+	let label;
+	let mounted;
+	let dispose;
+
+	return {
+		c() {
+			button = element("button");
+			button.textContent = "Liberate";
+			t1 = space();
+			input = element("input");
+			t2 = space();
+			label = element("label");
+			label.textContent = "Vandalize";
+			attr(input, "type", "file");
+			attr(input, "id", "image-file");
+			attr(input, "name", "image");
+			attr(label, "for", "image-file");
+		},
+		m(target, anchor) {
+			insert(target, button, anchor);
+			insert(target, t1, anchor);
+			insert(target, input, anchor);
+			/*input_binding*/ ctx[9](input);
+			insert(target, t2, anchor);
+			insert(target, label, anchor);
+
+			if (!mounted) {
+				dispose = [
+					listen(button, "click", /*click_handler*/ ctx[8]),
+					listen(input, "change", /*change_handler*/ ctx[10])
+				];
+
+				mounted = true;
+			}
+		},
+		p: noop,
+		d(detaching) {
+			if (detaching) detach(button);
+			if (detaching) detach(t1);
+			if (detaching) detach(input);
+			/*input_binding*/ ctx[9](null);
+			if (detaching) detach(t2);
+			if (detaching) detach(label);
+			mounted = false;
+			run_all(dispose);
+		}
+	};
+}
+
 function create_fragment(ctx) {
 	let div4;
 	let div0;
@@ -37,23 +109,24 @@ function create_fragment(ctx) {
 	let t5;
 	let t6;
 	let div1;
-	let button;
-	let t8;
-	let input;
-	let t9;
-	let label;
-	let t11;
+	let t7;
 	let div2;
 	let pre1;
-	let t12_value = /*logs*/ ctx[1].join("\n") + "";
-	let t12;
-	let t13;
+	let t8_value = /*logs*/ ctx[1].join("\n") + "";
+	let t8;
+	let t9;
 	let div3;
 	let img;
 	let img_src_value;
 	let img_alt_value;
-	let mounted;
-	let dispose;
+
+	function select_block_type(ctx, dirty) {
+		if (/*state*/ ctx[4] === "idle") return create_if_block;
+		return create_else_block;
+	}
+
+	let current_block_type = select_block_type(ctx, -1);
+	let if_block = current_block_type(ctx);
 
 	return {
 		c() {
@@ -70,25 +143,15 @@ function create_fragment(ctx) {
 			t5 = text(t5_value);
 			t6 = space();
 			div1 = element("div");
-			button = element("button");
-			button.textContent = "Liberate";
-			t8 = space();
-			input = element("input");
-			t9 = space();
-			label = element("label");
-			label.textContent = "Vandalize";
-			t11 = space();
+			if_block.c();
+			t7 = space();
 			div2 = element("div");
 			pre1 = element("pre");
-			t12 = text(t12_value);
-			t13 = space();
+			t8 = text(t8_value);
+			t9 = space();
 			div3 = element("div");
 			img = element("img");
 			attr(div0, "class", "header svelte-1qflc1w");
-			attr(input, "type", "file");
-			attr(input, "id", "image-file");
-			attr(input, "name", "image");
-			attr(label, "for", "image-file");
 			attr(div1, "class", "header svelte-1qflc1w");
 			attr(div2, "class", "log svelte-1qflc1w");
 			if (img.src !== (img_src_value = /*fromToken*/ ctx[0].metadata.image)) attr(img, "src", img_src_value);
@@ -111,35 +174,34 @@ function create_fragment(ctx) {
 			append(pre0, t5);
 			append(div4, t6);
 			append(div4, div1);
-			append(div1, button);
-			append(div1, t8);
-			append(div1, input);
-			/*input_binding*/ ctx[8](input);
-			append(div1, t9);
-			append(div1, label);
-			append(div4, t11);
+			if_block.m(div1, null);
+			append(div4, t7);
 			append(div4, div2);
 			append(div2, pre1);
-			append(pre1, t12);
-			append(div4, t13);
+			append(pre1, t8);
+			append(div4, t9);
 			append(div4, div3);
 			append(div3, img);
-			/*img_binding*/ ctx[10](img);
-
-			if (!mounted) {
-				dispose = [
-					listen(button, "click", /*click_handler*/ ctx[7]),
-					listen(input, "change", /*change_handler*/ ctx[9])
-				];
-
-				mounted = true;
-			}
+			/*img_binding*/ ctx[11](img);
 		},
 		p(ctx, [dirty]) {
 			if (dirty & /*fromToken*/ 1 && t0_value !== (t0_value = /*fromToken*/ ctx[0].metadata.name + "")) set_data(t0, t0_value);
 			if (dirty & /*fromToken*/ 1 && t3_value !== (t3_value = /*fromToken*/ ctx[0].uri + "")) set_data(t3, t3_value);
 			if (dirty & /*fromToken*/ 1 && t5_value !== (t5_value = JSON.stringify(/*fromToken*/ ctx[0].metadata, null, 4) + "")) set_data(t5, t5_value);
-			if (dirty & /*logs*/ 2 && t12_value !== (t12_value = /*logs*/ ctx[1].join("\n") + "")) set_data(t12, t12_value);
+
+			if (current_block_type === (current_block_type = select_block_type(ctx, dirty)) && if_block) {
+				if_block.p(ctx, dirty);
+			} else {
+				if_block.d(1);
+				if_block = current_block_type(ctx);
+
+				if (if_block) {
+					if_block.c();
+					if_block.m(div1, null);
+				}
+			}
+
+			if (dirty & /*logs*/ 2 && t8_value !== (t8_value = /*logs*/ ctx[1].join("\n") + "")) set_data(t8, t8_value);
 
 			if (dirty & /*fromToken*/ 1 && img.src !== (img_src_value = /*fromToken*/ ctx[0].metadata.image)) {
 				attr(img, "src", img_src_value);
@@ -153,10 +215,8 @@ function create_fragment(ctx) {
 		o: noop,
 		d(detaching) {
 			if (detaching) detach(div4);
-			/*input_binding*/ ctx[8](null);
-			/*img_binding*/ ctx[10](null);
-			mounted = false;
-			run_all(dispose);
+			if_block.d();
+			/*img_binding*/ ctx[11](null);
 		}
 	};
 }
@@ -169,6 +229,7 @@ function instance($$self, $$props, $$invalidate) {
 	let logs = [];
 	let imageElement;
 	let uploadElement;
+	let state = "idle";
 
 	function log(s) {
 		console.log(s);
@@ -176,10 +237,12 @@ function instance($$self, $$props, $$invalidate) {
 	}
 
 	async function handleLiberate() {
+		$$invalidate(4, state = "working");
 		log(`Get original image from ${fromToken.metadata.image}`);
 		const imageReq = await fetch(fromToken.metadata.image);
 		const image = await imageReq.blob();
 		await handleVandalize(image);
+		$$invalidate(4, state = "idle");
 	}
 
 	async function handleVandalize(image) {
@@ -215,6 +278,8 @@ function instance($$self, $$props, $$invalidate) {
 	}
 
 	async function handleUpload() {
+		$$invalidate(4, state = "working");
+
 		if (!uploadElement.files) {
 			return;
 		}
@@ -239,6 +304,7 @@ function instance($$self, $$props, $$invalidate) {
 		};
 
 		fileReaderBinary.readAsArrayBuffer(file);
+		$$invalidate(4, state = "idle");
 	}
 
 	const click_handler = () => handleLiberate();
@@ -261,7 +327,7 @@ function instance($$self, $$props, $$invalidate) {
 
 	$$self.$$set = $$props => {
 		if ("fromToken" in $$props) $$invalidate(0, fromToken = $$props.fromToken);
-		if ("vandalizer" in $$props) $$invalidate(6, vandalizer = $$props.vandalizer);
+		if ("vandalizer" in $$props) $$invalidate(7, vandalizer = $$props.vandalizer);
 	};
 
 	return [
@@ -269,6 +335,7 @@ function instance($$self, $$props, $$invalidate) {
 		logs,
 		imageElement,
 		uploadElement,
+		state,
 		handleLiberate,
 		handleUpload,
 		vandalizer,
@@ -282,7 +349,7 @@ function instance($$self, $$props, $$invalidate) {
 class Vandalize extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance, create_fragment, safe_not_equal, { fromToken: 0, vandalizer: 6 });
+		init(this, options, instance, create_fragment, safe_not_equal, { fromToken: 0, vandalizer: 7 });
 	}
 }
 
